@@ -1,16 +1,25 @@
 import React from "react";
+import useBooksFetch from "../hooks/useBooksFetch";
 
-const BookCard = () => {
+const BookCard = ({ fetchUrl }) => {
+  console.log("hihi");
+  const { data: bookData, isPending, error } = useBooksFetch(fetchUrl);
+
   return (
-    <div className="book-card">
-      <img
-        src="https://marketplace.canva.com/EAFersXpW3g/1/0/1003w/canva-blue-and-white-modern-business-book-cover-cfxNJXYre8I.jpg"
-        alt="Book Image"
-      />
-      <span>Title</span>
-      <span>Author</span>
-      <span>Catagories</span>
-    </div>
+    <>
+      {bookData &&
+        bookData.slice(1, 4).map((bd) => (
+          <div className="book-card" key={bd.book.id}>
+            <img
+              src="https://marketplace.canva.com/EAFersXpW3g/1/0/1003w/canva-blue-and-white-modern-business-book-cover-cfxNJXYre8I.jpg"
+              alt="Book Image"
+            />
+            <span>{bd.book.title}</span>
+            <span>{bd.author.name}</span>
+            <span>Categories</span>
+          </div>
+        ))}
+    </>
   );
 };
 

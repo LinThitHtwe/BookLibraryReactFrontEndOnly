@@ -6,7 +6,7 @@ const BookRead = () => {
       <div className="book-read-navbar">
         <div className="title-container">
           <span>BookTitle</span>
-          <span className="material-symbols-outlined fill">favorite</span>
+          <i class="fa-solid fa-heart"></i>
         </div>
         <div className="page-function-container">
           <div className="page-search">
@@ -14,23 +14,19 @@ const BookRead = () => {
             <input type="text" placeholder="1" />
           </div>
           <button>
-            <span class="material-symbols-outlined">chevron_left</span>
+            <i class="fa-solid fa-chevron-left"></i>
           </button>
           <button>
-            <span class="material-symbols-outlined">navigate_next</span>
+            <i class="fa-solid fa-chevron-right"></i>
           </button>
-          <span class="material-symbols-outlined">bookmark</span>
+          <i class="fa-regular fa-bookmark"></i>
           <button>
-            <span class="material-symbols-outlined">
-              keyboard_double_arrow_left
-            </span>
+            <i class="fa-solid fa-angles-left"></i>
           </button>
           <button>
-            <span class="material-symbols-outlined">
-              keyboard_double_arrow_right
-            </span>
+            <i class="fa-solid fa-angles-right"></i>
           </button>
-          <span class="material-symbols-outlined">fullscreen</span>
+          <i class="fa-solid fa-expand"></i>
         </div>
       </div>
       <div className="book-page">

@@ -25,19 +25,18 @@ const LeftSidebar = () => {
     <div className="left-sidebar">
       <ul className="sidebar-content">
         <li className="sidebar-dropdown">
-          <span className="material-symbols-outlined">home</span>
+          <i class="fa-solid fa-house"></i>
           <a href="#">Home</a>
         </li>
         <li>
           <a className="sidebar-dropdown" onClick={bookmarkToggleClick}>
-            <span className="material-symbols-outlined">bookmark</span> Bookmark
+            <i class="fa-regular fa-bookmark"></i> Bookmark
           </a>
         </li>
         <li>{isBookmarkToggleOn && <BookmarksList />}</li>
         <li>
           <a className="sidebar-dropdown" onClick={wishToggleClick}>
-            <span className="material-symbols-outlined">favorite</span> Wish
-            List
+            <i class="fa-regular fa-heart"></i> Wish List
           </a>
         </li>
         <li>{isWishListToggleOn && <WishList />}</li>

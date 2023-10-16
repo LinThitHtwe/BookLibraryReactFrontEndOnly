@@ -118,6 +118,7 @@
   background-color: #777;
   color: #000;
   height: 35px;
+  width: 30px;
 }
 
 .page-search {
@@ -132,14 +133,6 @@
   border-radius: 5px;
   padding: 10px;
 }
-
-/* .material-symbols-outlined.fill {
-  font-size: 24px; Adjust the size as needed */
-/* Fill color for the inside */
-/* color: transparent; Make the text transparent */
-/* 
-  text-align: center;
-} */
 
 .book-page {
   display: flex;

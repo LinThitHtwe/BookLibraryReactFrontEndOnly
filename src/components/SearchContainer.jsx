@@ -7,7 +7,7 @@ const SearchContainer = () => {
         <span class="material-symbols-outlined">search</span>
       </div>
 
-      <span className="material-symbols-outlined">dark_mode</span>
+      <i class="fa-solid fa-circle-half-stroke"></i>
     </div>
   );
 };
