@@ -7,8 +7,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8080/";
 // axios.defaults.withCredentials = true;
-axios.defaults.headers.common["Cookie"] =
-  "j%3A%7B%22id%22%3A1%2C%22username%22%3A%22John%22%2C%22password%22%3A%22password%22%7D";
+
 function App() {
   return (
     <>
