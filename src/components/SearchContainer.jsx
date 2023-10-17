@@ -2,12 +2,12 @@ import React from "react";
 const SearchContainer = () => {
   return (
     <div className="search-container">
-      <div class="search-input-container">
+      <div className="search-input-container">
         <input type="text" placeholder="Search Books" />
-        <span class="material-symbols-outlined">search</span>
+        <span className="material-symbols-outlined hover">search</span>
       </div>
 
-      <i class="fa-solid fa-circle-half-stroke"></i>
+      <i className="fa-solid fa-circle-half-stroke hover"></i>
     </div>
   );
 };

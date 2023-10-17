@@ -20,7 +20,7 @@ function App() {
           <LeftSidebar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/read" element={<BookRead />} />
+            <Route path="/book/:id" element={<BookRead />} />
           </Routes>
         </div>
       </BrowserRouter>

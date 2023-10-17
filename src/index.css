@@ -103,7 +103,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 8vw;
+  min-width: 8vw;
+  width: auto;
+  padding: 10px;
 }
 
 .page-function-container {
@@ -119,6 +121,25 @@
   color: #000;
   height: 35px;
   width: 30px;
+}
+
+.page-function-container button:hover {
+  scale: 1.1;
+}
+
+.fa-solid.fa-circle-half-stroke.hover:hover,
+.material-symbols-outlined.hover:hover,
+.fa-regular.fa-bookmark.hover:hover,
+.fa-solid.fa-expand.hover:hover,
+.fa-solid.fa-heart.hover:hover {
+  scale: 1.2;
+  transition: all;
+  transition-timing-function: ease-in-out;
+}
+
+.card-link {
+  text-decoration: none;
+  color: #000;
 }
 
 .page-search {
@@ -159,7 +180,7 @@
 
 .search-container input {
   border-radius: 10px;
-  width: 40vw;
+  width: 50vw;
   height: 60px;
   outline: #282828;
   padding: 10px;
@@ -177,20 +198,30 @@
 
 .card-container {
   margin-top: 20px;
-  background-color: #444;
   border-radius: 10px;
   display: flex;
   height: 100vh;
+  background-color: #444;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 10px;
+  padding-top: 10px;
+}
+
+.book-card-container {
+  margin-top: 10px;
+  border-radius: 10px;
+  display: flex;
+  height: 70vh;
   justify-content: space-evenly;
   flex-wrap: wrap;
   padding: 10px;
-  padding-top: 50px;
 }
 
 .book-card {
   background-color: #999;
-  height: 55vh;
-  width: 16vw;
+  height: 57vh;
+  width: 18vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -200,7 +231,7 @@
 }
 
 .book-card:hover {
-  scale: 1.03;
+  transform: scale(1.03);
   transition: 0.3s;
   transition-timing-function: ease-in-out;
   cursor: pointer;
@@ -211,6 +242,20 @@
   width: 25vh;
   border-radius: 10px;
   margin-top: 10px;
+}
+
+.click {
+  font-size: 20px;
+  margin: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100%;
+}
+
+.click i:hover {
+  scale: 1.02;
 }
 
 .profile-container {
@@ -308,4 +353,31 @@ progress::-webkit-progress-value {
 .login-submit input:hover {
   scale: 1.1;
   transition: all 0.3;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: #000;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  background-color: #666;
+  border-radius: 10px;
+  margin: 0px 5px;
+}
+
+.pagination a:hover {
+  scale: 1.1;
+}
+.pagination a.active {
+  background-color: #888;
+  color: white;
 }
