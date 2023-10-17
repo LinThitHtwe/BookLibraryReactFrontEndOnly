@@ -3,7 +3,7 @@ import useBooksFetch from "../hooks/useBooksFetch";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
-const BookCard = ({ fetchUrl }) => {
+const BookCard = ({ fetchUrl, searchQuery }) => {
   const { data: bookData, isPending, error } = useBooksFetch(fetchUrl);
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(0);
@@ -14,7 +14,14 @@ const BookCard = ({ fetchUrl }) => {
     setCurrentPage(selectedPage.selected);
   };
 
-  const paginatedData = bookData?.slice(startIndex, endIndex);
+  const filteredBookData = bookData?.filter((bd) => {
+    const titleMatch = bd.book.title.toLowerCase().includes(searchQuery);
+    const authorMatch = bd.author.name.toLowerCase().includes(searchQuery);
+
+    return titleMatch || authorMatch;
+  });
+
+  const paginatedData = filteredBookData?.slice(startIndex, endIndex);
 
   return (
     <>
@@ -22,14 +29,20 @@ const BookCard = ({ fetchUrl }) => {
         {error && <div>Fail to fetch Book data</div>}
         {paginatedData &&
           paginatedData.map((bd) => (
-            <Link to={"/book/" + bd.book.id} className="card-link">
-              <div className="book-card" key={bd.book.id}>
+            <Link
+              to={"/book/" + bd.book.id}
+              className="card-link"
+              key={bd.book.id}
+            >
+              <div className="book-card">
                 <img
                   src="https://marketplace.canva.com/EAFersXpW3g/1/0/1003w/canva-blue-and-white-modern-business-book-cover-cfxNJXYre8I.jpg"
                   alt="Book Image"
                 />
-                <span>{bd.book.title}</span>
-                <span>{bd.author.name}</span>
+                <div className="book-info">
+                  <p>{bd.book.title}</p>
+                  <p>{bd.author.name}</p>
+                </div>
                 <div className="click">
                   <i className="fa-regular fa-heart hover"></i>
                   <i className="fa-solid fa-ellipsis"></i>
@@ -37,14 +50,15 @@ const BookCard = ({ fetchUrl }) => {
               </div>
             </Link>
           ))}
+        {paginatedData?.length === 0 && <span>No book found</span>}
       </div>
       <div className="pagination-container">
-        {bookData && (
+        {filteredBookData && (
           <ReactPaginate
             previousLabel={"Previous"}
             nextLabel={"Next"}
             breakLabel={"..."}
-            pageCount={Math.ceil((bookData.length || 0) / itemsPerPage)}
+            pageCount={Math.ceil((filteredBookData.length || 0) / itemsPerPage)}
             marginPagesDisplayed={1}
             pageRangeDisplayed={2}
             onPageChange={handlePageClick}

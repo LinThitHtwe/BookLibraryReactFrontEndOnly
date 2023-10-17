@@ -3,10 +3,10 @@ import BookCard from "./BookCard";
 
 const showAllBookUrl = "api/v1/booksList";
 
-const CardContainer = () => {
+const CardContainer = ({ searchQuery }) => {
   return (
     <div className="card-container">
-      <BookCard fetchUrl={showAllBookUrl} />
+      <BookCard fetchUrl={showAllBookUrl} searchQuery={searchQuery} />
     </div>
   );
 };

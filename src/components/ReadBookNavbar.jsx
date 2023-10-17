@@ -11,7 +11,7 @@ const ReadBookNavbar = ({ id }) => {
   const [currentPage, setCurrentPage] = useState(2);
   const firstPageIndexRef = useRef(0);
   const secondPageIndexRef = useRef(1);
-  const [decompressedData, setDecompressedData] = useState([]);
+  // const [decompressedData, setDecompressedData] = useState([]);
   const firstPage = data?.contents[0].page_no;
   const lastPage = data?.contents[data?.contents.length - 1]?.page_no;
 
