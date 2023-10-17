@@ -17,9 +17,9 @@ const ReadBookNavbar = ({ id }) => {
 
   const isCurrentPageTwo = currentPage === 2;
   const subtractValue = isCurrentPageTwo ? -1 : -2;
-  const shouldFetchData = currentPage === lastPage + subtractValue;
 
-  console.log(shouldFetchData);
+  const shouldFetchData = currentPage === lastPage + subtractValue;
+  let twoDArray = [];
   const fetchUrl = `api/v1/book/${id}/${currentPage}`;
 
   useEffect(() => {
@@ -49,70 +49,27 @@ const ReadBookNavbar = ({ id }) => {
   }, [id, shouldFetchData]);
 
   const handleNextPageClick = () => {
+    console.log("click");
     setCurrentPage((prevPage) => prevPage + 2);
-    firstPageIndexRef.current += 2;
+    firstPageIndexRef.current += 1;
     secondPageIndexRef.current += 2;
   };
 
   const handlePreviousPageClick = () => {
     setCurrentPage((prevPage) => prevPage - 2);
-    firstPageIndexRef.current -= 2;
+    firstPageIndexRef.current -= 1;
     secondPageIndexRef.current -= 2;
   };
+  if (data) {
+    const originalArray = data?.contents;
 
-  console.log("currentPage", currentPage);
-
-  console.log(data);
-
-  // useEffect(() => {
-  //   // Assuming 'data' is available and contains 'contents' as described in your code
-  //   const decompressedData = data?.contents?.map((entry) => {
-  //     console.log(entry);
-  //     console.log("content", entry.content);
-  //     const compressedData = atob(entry.content);
-  //     console.log("compressedData", compressedData);
-  //     const uint8Array = new TextEncoder().encode(compressedData);
-  //     console.log("uint8Array", uint8Array);
-  //     const decompressedUint8Array = pako.inflate(uint8Array);
-  //     console.log("decompressedUint8Array", decompressedUint8Array);
-  //     const decompressedString = new TextDecoder().decode(
-  //       decompressedUint8Array
-  //     );
-  //     const decompressedObject = JSON.parse(decompressedString);
-
-  //     return {
-  //       id: entry.id,
-  //       bookId: entry.bookId,
-  //       content: decompressedObject,
-  //       page_no: entry.page_no,
-  //     };
-  //   });
-
-  //   setDecompressedData(decompressedData);
-  // }, [data]);
-
-  // console.log("decompress data", decompressedData);
-
-  // const decompressedData = data?.contents?.map((entry) => {
-  //   console.log("inside");
-  //   const compressedData = atob(entry.content);
-  //   const uint8Array = new TextEncoder().encode(compressedData);
-  //   const decompressedUint8Array = pako.inflate(uint8Array);
-  //   const decompressedString = new TextDecoder().decode(decompressedUint8Array);
-  //   const decompressedObject = JSON.parse(decompressedString);
-
-  //   return {
-  //     id: entry.id,
-  //     bookId: entry.bookId,
-  //     content: decompressedObject,
-  //     page_no: entry.page_no,
-  //   };
-  // });
-  // console.log(decompressedData);
-  // };
-  // if (data) {
-  //   console.log(decompress(data.contents));
-  // }
+    twoDArray = originalArray.reduce((result, item, index, array) => {
+      if (index % 2 === 0) {
+        result.push([item, array[index + 1]]);
+      }
+      return result;
+    }, []);
+  }
 
   return (
     <>
@@ -145,11 +102,17 @@ const ReadBookNavbar = ({ id }) => {
 
       <div className="book-page">
         <div className="book-page left">
-          {data?.contents[firstPageIndexRef.current]?.content}
+          {twoDArray[firstPageIndexRef.current] && (
+            <span>{twoDArray[firstPageIndexRef.current][0].content}</span>
+          )}
         </div>
 
         <div className="book-page right">
-          {data?.contents[secondPageIndexRef.current]?.content}
+          <div className="book-page left">
+            {twoDArray[firstPageIndexRef.current] && (
+              <span>{twoDArray[firstPageIndexRef.current][1].content}</span>
+            )}
+          </div>
         </div>
       </div>
     </>

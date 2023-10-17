@@ -55,7 +55,7 @@ const BookCard = ({ fetchUrl }) => {
             previousLinkClassName={"pagination"}
             nextClassName={"pagination next"}
             nextLinkClassName={"pagination"}
-            activeClassName={"pagination active"}
+            activeClassName={"active"}
             breakClassName={"pagination"}
             breakLinkClassName={"pagination"}
           />

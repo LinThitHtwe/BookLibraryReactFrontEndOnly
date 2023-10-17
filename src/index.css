@@ -369,15 +369,20 @@ progress::-webkit-progress-value {
   float: left;
   padding: 8px 16px;
   text-decoration: none;
+  border-radius: 10px;
+  margin: 0px 5px;
+}
+
+.pagination li {
   background-color: #666;
   border-radius: 10px;
   margin: 0px 5px;
 }
 
-.pagination a:hover {
+.pagination li:hover {
   scale: 1.1;
 }
-.pagination a.active {
+.pagination.active {
   background-color: #888;
   color: white;
 }
