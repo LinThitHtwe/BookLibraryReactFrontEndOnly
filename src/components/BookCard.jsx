@@ -6,6 +6,7 @@ import UseFetch from "../hooks/useFetch";
 
 const BookCard = ({ fetchUrl, searchQuery }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [heartClick, setHeartClick] = useState([]);
   const { data: bookData, isPending, error } = UseFetch(fetchUrl);
   const [darkTheme, setDarkTheme] = useTheme();
   const itemsPerPage = 3;
@@ -32,9 +33,17 @@ const BookCard = ({ fetchUrl, searchQuery }) => {
     setIsModalOpen(false);
   };
 
-  const handeClick = (e) => {
+  const handleHeartClick = (e, bd) => {
+    console.log("click");
     e.preventDefault();
-    console.log("heart click");
+    const index = heartClick.indexOf(bd.book.id);
+    if (index == -1) {
+      setHeartClick([...heartClick, bd.book.id]);
+    } else {
+      const updatedHeartClick = [...heartClick];
+      updatedHeartClick.splice(index, 1);
+      setHeartClick(updatedHeartClick);
+    }
   };
 
   const paginatedData = filteredBookData?.slice(startIndex, endIndex);
@@ -61,8 +70,10 @@ const BookCard = ({ fetchUrl, searchQuery }) => {
                 </div>
                 <div className="click">
                   <i
-                    className="fa-regular fa-heart hover"
-                    onClick={handeClick}
+                    className={`fa-${
+                      heartClick.includes(bd.book.id) ? "solid" : "regular"
+                    } fa-heart hover`}
+                    onClick={(e) => handleHeartClick(e, bd)}
                   ></i>
                   <i
                     className="fa-solid fa-ellipsis"
