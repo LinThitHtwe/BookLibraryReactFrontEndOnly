@@ -3,11 +3,13 @@ import UseFetchPages from "../hooks/useFetchPages";
 import axios from "axios";
 import zlib from "zlib";
 import pako from "pako";
+import { useTheme } from "../context/ThemeProvider";
 
 const ReadBookNavbar = ({ id }) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
+  const [darkTheme, setDarkTheme] = useTheme();
   const [currentPage, setCurrentPage] = useState(2);
   const firstPageIndexRef = useRef(0);
   const secondPageIndexRef = useRef(1);
@@ -97,22 +99,24 @@ const ReadBookNavbar = ({ id }) => {
             <i className="fa-solid fa-angles-right"></i>
           </button>
           <i className="fa-solid fa-expand hover"></i>
+          <i
+            className="fa-solid fa-circle-half-stroke hover"
+            onClick={() => setDarkTheme(!darkTheme)}
+          ></i>
         </div>
       </div>
 
-      <div className="book-page">
-        <div className="book-page left">
+      <div className={`book-page ${darkTheme ? "" : "light"}`}>
+        <div className={`book-page left ${darkTheme ? "" : "light"}`}>
           {twoDArray[firstPageIndexRef.current] && (
             <span>{twoDArray[firstPageIndexRef.current][0].content}</span>
           )}
         </div>
 
-        <div className="book-page right">
-          <div className="book-page left">
-            {twoDArray[firstPageIndexRef.current] && (
-              <span>{twoDArray[firstPageIndexRef.current][1].content}</span>
-            )}
-          </div>
+        <div className={`book-page right ${darkTheme ? "" : "light"}`}>
+          {twoDArray[firstPageIndexRef.current] && (
+            <span>{twoDArray[firstPageIndexRef.current][1].content}</span>
+          )}
         </div>
       </div>
     </>

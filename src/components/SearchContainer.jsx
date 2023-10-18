@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { ACTIONS } from "../pages/Home";
+import { useTheme } from "../context/ThemeProvider";
 
 const SearchContainer = ({ dispatch }) => {
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [darkTheme, setDarkTheme] = useTheme();
 
   const handleInputChange = (e) => {
     setSearchQuery(e.target.value);
@@ -13,7 +16,7 @@ const SearchContainer = ({ dispatch }) => {
   };
 
   return (
-    <div className="search-container">
+    <div className={`search-container ${darkTheme ? "" : "light"}`}>
       <div className="search-input-container">
         <input
           type="text"
@@ -34,7 +37,10 @@ const SearchContainer = ({ dispatch }) => {
         </span>
       </div>
 
-      <i className="fa-solid fa-circle-half-stroke hover"></i>
+      <i
+        className="fa-solid fa-circle-half-stroke hover"
+        onClick={() => setDarkTheme(!darkTheme)}
+      ></i>
     </div>
   );
 };

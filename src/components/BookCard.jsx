@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import useBooksFetch from "../hooks/useBooksFetch";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import { useTheme } from "../context/ThemeProvider";
 
 const BookCard = ({ fetchUrl, searchQuery }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: bookData, isPending, error } = useBooksFetch(fetchUrl);
+  const [darkTheme, setDarkTheme] = useTheme();
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(0);
   const startIndex = currentPage * itemsPerPage;
@@ -20,6 +23,14 @@ const BookCard = ({ fetchUrl, searchQuery }) => {
 
     return titleMatch || authorMatch;
   });
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const paginatedData = filteredBookData?.slice(startIndex, endIndex);
 
@@ -45,13 +56,18 @@ const BookCard = ({ fetchUrl, searchQuery }) => {
                 </div>
                 <div className="click">
                   <i className="fa-regular fa-heart hover"></i>
-                  <i className="fa-solid fa-ellipsis"></i>
+                  <i
+                    className="fa-solid fa-ellipsis"
+                    onClick={handleOpenModal}
+                  ></i>
                 </div>
               </div>
             </Link>
           ))}
+
         {paginatedData?.length === 0 && <span>No book found</span>}
       </div>
+
       <div className="pagination-container">
         {filteredBookData && (
           <ReactPaginate

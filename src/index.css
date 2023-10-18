@@ -23,6 +23,12 @@
   padding: 15px;
 }
 
+.left-sidebar.light,
+.right-sidebar.light {
+  background-color: #eee;
+  color: #333;
+}
+
 .sidebar-content {
   border-radius: 10px;
   padding: 10px;
@@ -34,6 +40,10 @@
   font-size: 18px;
   list-style: none;
   background-color: #262626;
+}
+
+.sidebar-content.light {
+  background-color: #c6c6c6;
 }
 
 .sidebar-content:hover {
@@ -64,6 +74,10 @@
   color: white;
 }
 
+.sidebar-content.light a {
+  color: #222;
+}
+
 .sidebar-content a:hover {
   scale: 1.03;
 }
@@ -84,6 +98,11 @@
   flex-direction: column;
 }
 
+.main-content.light {
+  background-color: #e5e5e5;
+  color: #222;
+}
+
 .book-reading-page {
   background-color: #333;
   flex-grow: 2;
@@ -94,6 +113,12 @@
   gap: 10px;
   color: white;
 }
+
+.book-reading-page.light {
+  color: #d7d7d7;
+  color: #222;
+}
+
 .book-read-navbar {
   display: flex;
   justify-content: space-between;
@@ -153,6 +178,9 @@
   width: 50%;
   border-radius: 5px;
   padding: 10px;
+  outline-style: solid;
+  outline-color: #333;
+  outline-width: thin;
 }
 
 .book-page {
@@ -165,11 +193,25 @@
   border-radius: 10px;
   gap: 10px;
 }
+
+.book-reading-page.light {
+  background-color: #ddd;
+}
+
+.book-page.light {
+  color: #222;
+  background-color: #ccc;
+}
 .book-page.left,
 .book-page.right {
   background-color: #444;
   padding: 10px;
   width: 40vw;
+}
+
+.book-page.left.light,
+.book-page.right.light {
+  background-color: #eee;
 }
 .search-container {
   display: flex;
@@ -178,11 +220,17 @@
   color: #fff;
 }
 
+.search-container.light {
+  color: #222;
+}
+
 .search-container input {
   border-radius: 10px;
   width: 50vw;
   height: 60px;
-  outline: #282828;
+  outline-style: solid;
+  outline-color: #333;
+  outline-width: thin;
   padding: 10px;
 }
 .search-container span {
@@ -206,6 +254,11 @@
   flex-wrap: wrap;
   padding: 10px;
   padding-top: 10px;
+}
+
+.card-container.light {
+  background-color: #d7d7d7;
+  color: #222;
 }
 
 .book-card-container {
@@ -265,6 +318,10 @@
   border-radius: 10px;
   padding: 10px;
 }
+.profile-container.light {
+  background-color: #c6c6c6;
+  color: #222;
+}
 
 .profile-container img {
   border-radius: 80px;
@@ -279,6 +336,10 @@
   border-radius: 10px;
   padding: 10px;
   margin-top: 30px;
+}
+
+.progress-bar-container.light {
+  background-color: #ddd;
 }
 .progress {
   margin-top: 10px;

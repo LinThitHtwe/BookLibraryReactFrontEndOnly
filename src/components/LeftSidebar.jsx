@@ -2,10 +2,11 @@ import BookmarksList from "./BookmarksList";
 import React, { useState } from "react";
 import WishList from "./WishList";
 import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeProvider";
 const LeftSidebar = () => {
   const [isBookmarkToggleOn, setIsBookmarkToggleOn] = useState(false);
   const [isWishListToggleOn, seIsWishListToggleOn] = useState(false);
-
+  const [darkTheme, setDarkTheme] = useTheme();
   const bookmarkToggleClick = () => {
     if (isBookmarkToggleOn) {
       setIsBookmarkToggleOn(false);
@@ -23,8 +24,8 @@ const LeftSidebar = () => {
   };
 
   return (
-    <div className="left-sidebar">
-      <ul className="sidebar-content">
+    <div className={`left-sidebar ${darkTheme ? "" : "light"}`}>
+      <ul className={`sidebar-content ${darkTheme ? "" : "light"}`}>
         <li className="sidebar-dropdown">
           <i className="fa-solid fa-house"></i>
           <Link to="/">Home</Link>
