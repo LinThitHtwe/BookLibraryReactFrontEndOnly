@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import useBooksFetch from "../hooks/useBooksFetch";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { useTheme } from "../context/ThemeProvider";
+import UseFetch from "../hooks/useFetch";
 
 const BookCard = ({ fetchUrl, searchQuery }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: bookData, isPending, error } = useBooksFetch(fetchUrl);
+  const { data: bookData, isPending, error } = UseFetch(fetchUrl);
   const [darkTheme, setDarkTheme] = useTheme();
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(0);
@@ -32,6 +32,11 @@ const BookCard = ({ fetchUrl, searchQuery }) => {
     setIsModalOpen(false);
   };
 
+  const handeClick = (e) => {
+    e.preventDefault();
+    console.log("heart click");
+  };
+
   const paginatedData = filteredBookData?.slice(startIndex, endIndex);
 
   return (
@@ -55,7 +60,10 @@ const BookCard = ({ fetchUrl, searchQuery }) => {
                   <p>{bd.author.name}</p>
                 </div>
                 <div className="click">
-                  <i className="fa-regular fa-heart hover"></i>
+                  <i
+                    className="fa-regular fa-heart hover"
+                    onClick={handeClick}
+                  ></i>
                   <i
                     className="fa-solid fa-ellipsis"
                     onClick={handleOpenModal}

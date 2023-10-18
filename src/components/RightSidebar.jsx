@@ -1,10 +1,12 @@
 import React from "react";
 import { useTheme } from "../context/ThemeProvider";
-import UseProgressFetch from "../hooks/useProgressFetch";
+import UseFetch from "../hooks/useFetch";
+
 const RightSidebar = () => {
   const [darkTheme, setDarkTheme] = useTheme();
+  const FETCHPROGRESSURL = "/api/v1/progressingBook/1";
 
-  const { data, isPending, error } = UseProgressFetch(1);
+  const { data, isPending, error } = UseFetch(FETCHPROGRESSURL);
   return (
     <div className={`right-sidebar ${darkTheme ? "" : "light"}`}>
       <div className={`profile-container ${darkTheme ? "" : "light"}`}>
@@ -23,24 +25,6 @@ const RightSidebar = () => {
                 </progress>
               </div>
             ))}
-          {/* <div className="progress">
-            <span>Book1: </span>
-            <progress value="32" max="100">
-              32%
-            </progress>
-          </div>
-          <div className="progress">
-            <span>Book2: </span>
-            <progress value="10" max="100">
-              10%
-            </progress>
-          </div>
-          <div className="progress">
-            <span>Book3: </span>
-            <progress value="80" max="100">
-              80%
-            </progress>
-          </div> */}
         </div>
       </div>
     </div>
