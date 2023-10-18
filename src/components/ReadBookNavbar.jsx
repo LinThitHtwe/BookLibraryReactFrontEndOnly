@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import UseFetchPages from "../hooks/useFetchPages";
 import axios from "axios";
 import zlib from "zlib";
 import pako from "pako";
 import { useTheme } from "../context/ThemeProvider";
 
 const ReadBookNavbar = ({ id }) => {
+  const [isHeartClick, setIsHeartClick] = useState(false);
+  const [isBookmarkClick, setIsBookmarkClick] = useState(false);
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
@@ -64,7 +65,6 @@ const ReadBookNavbar = ({ id }) => {
   };
   if (data) {
     const originalArray = data?.contents;
-
     twoDArray = originalArray.reduce((result, item, index, array) => {
       if (index % 2 === 0) {
         result.push([item, array[index + 1]]);
@@ -73,12 +73,24 @@ const ReadBookNavbar = ({ id }) => {
     }, []);
   }
 
+  const handleHeartClick = () => {
+    setIsHeartClick(!isHeartClick);
+  };
+  const handleBookmarkClick = () => {
+    setIsBookmarkClick(!isBookmarkClick);
+  };
+
   return (
     <>
       <div className="book-read-navbar">
         <div className="title-container">
           <span>{data?.book.title}</span>
-          <i className="fa-solid fa-heart hover"></i>
+          <i
+            className={`fa-${
+              isHeartClick ? "solid" : "regular"
+            } fa-heart hover`}
+            onClick={handleHeartClick}
+          ></i>
         </div>
         <div className="page-function-container">
           <div className="page-search">
@@ -91,7 +103,12 @@ const ReadBookNavbar = ({ id }) => {
           <button onClick={handleNextPageClick}>
             <i className="fa-solid fa-chevron-right"></i>
           </button>
-          <i className="fa-regular fa-bookmark hover"></i>
+          <i
+            className={`fa-${
+              isBookmarkClick ? "solid" : "regular"
+            } fa-bookmark hover`}
+            onClick={handleBookmarkClick}
+          ></i>
           <button>
             <i className="fa-solid fa-angles-left"></i>
           </button>

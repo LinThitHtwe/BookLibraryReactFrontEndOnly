@@ -155,8 +155,10 @@
 .fa-solid.fa-circle-half-stroke.hover:hover,
 .material-symbols-outlined.hover:hover,
 .fa-regular.fa-bookmark.hover:hover,
+.fa-solid.fa-bookmark.hover:hover,
 .fa-solid.fa-expand.hover:hover,
-.fa-solid.fa-heart.hover:hover {
+.fa-solid.fa-heart.hover:hover,
+.fa-regular.fa-heart.hover:hover {
   scale: 1.2;
   transition: all;
   transition-timing-function: ease-in-out;
