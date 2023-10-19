@@ -1,37 +1,32 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import UseFetch from "../hooks/useFetch";
+import { useState } from "react";
+import BookMarkDetails from "./BookMarkDetails";
 const BookmarksList = () => {
-  console.log("bookmark");
-  useEffect(() => {
-    axios
-      .get("/api/v1/bookmark/1/1")
-      .then((res) => {
-        if (!res.ok) {
-          console.log("not okay");
-        }
-        console.log(res.data);
-        return res;
-      })
-      .then((data) => {
-        console.log("my data--" + data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const fetchUrl = "/api/v1/bookmark/1";
+  const { data, isPending, error } = UseFetch(fetchUrl);
+  const [openItemIds, setOpenItemIds] = useState([]);
 
+  const toggleBookmarkDetail = (itemId) => {
+    if (openItemIds.includes(itemId)) {
+      setOpenItemIds(openItemIds.filter((id) => id !== itemId));
+    } else {
+      setOpenItemIds([...openItemIds, itemId]);
+    }
+  };
   return (
     <div className="sidebar-dropdown bookmark-item">
       <ul>
-        <li>
-          <a href="#">Book1</a>
-        </li>
-        <li>
-          <a href="#">Book1</a>
-        </li>
-        <li>
-          <a href="#">Book1</a>
-        </li>
+        {data &&
+          data.map((d) => (
+            <li key={d.id} onClick={() => toggleBookmarkDetail(d.id)}>
+              <span>{d.bookTitle}</span>
+              {openItemIds.includes(d.id) && (
+                <BookMarkDetails bookId={d.bookId} userId={1} />
+              )}
+            </li>
+          ))}
       </ul>
     </div>
   );

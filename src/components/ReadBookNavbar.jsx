@@ -70,7 +70,7 @@ const ReadBookNavbar = ({ id }) => {
         result.push([item, array[index + 1]]);
       }
       return result;
-    }, []);
+    }, []);9
   }
 
   const handleHeartClick = () => {

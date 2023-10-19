@@ -14,7 +14,6 @@ const UseFetch = (fetchUrl) => {
           setData(res.data);
           setIsPending(false);
           setError(null);
-          console.log(data);
         })
         .catch((err) => {
           console.log(err);
