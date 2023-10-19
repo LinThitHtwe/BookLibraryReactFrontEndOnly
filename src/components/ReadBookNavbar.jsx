@@ -3,31 +3,34 @@ import axios from "axios";
 import zlib from "zlib";
 import pako from "pako";
 import { useTheme } from "../context/ThemeProvider";
+import { useParams } from "react-router-dom";
 
 const ReadBookNavbar = ({ id }) => {
+  const { currentPage: currentPageFromUrl } = useParams();
   const [isHeartClick, setIsHeartClick] = useState(false);
   const [isBookmarkClick, setIsBookmarkClick] = useState(false);
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
   const [darkTheme, setDarkTheme] = useTheme();
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(
+    currentPageFromUrl ? parseInt(currentPageFromUrl) + 2 : 2
+  );
+
   const firstPageIndexRef = useRef(0);
   const secondPageIndexRef = useRef(1);
-  // const [decompressedData, setDecompressedData] = useState([]);
   const firstPage = data?.contents[0].page_no;
   const lastPage = data?.contents[data?.contents.length - 1]?.page_no;
 
   const isCurrentPageTwo = currentPage === 2;
   const subtractValue = isCurrentPageTwo ? -1 : -2;
-
+  const shouldFetchDataBackward = currentPage === firstPage + 1;
   const shouldFetchData = currentPage === lastPage + subtractValue;
   let twoDArray = [];
   const fetchUrl = `api/v1/book/${id}/${currentPage}`;
 
   useEffect(() => {
     const fetchData = () => {
-      console.log("fetchhhhh");
       axios
         .get(fetchUrl)
         .then((res) => {
@@ -49,7 +52,7 @@ const ReadBookNavbar = ({ id }) => {
     fetchData();
     firstPageIndexRef.current = 0;
     secondPageIndexRef.current = 1;
-  }, [id, shouldFetchData]);
+  }, [id, shouldFetchData, shouldFetchDataBackward, currentPageFromUrl]);
 
   const handleNextPageClick = () => {
     console.log("click");
@@ -70,7 +73,8 @@ const ReadBookNavbar = ({ id }) => {
         result.push([item, array[index + 1]]);
       }
       return result;
-    }, []);9
+    }, []);
+    9;
   }
 
   const handleHeartClick = () => {
@@ -126,13 +130,19 @@ const ReadBookNavbar = ({ id }) => {
       <div className={`book-page ${darkTheme ? "" : "light"}`}>
         <div className={`book-page left ${darkTheme ? "" : "light"}`}>
           {twoDArray[firstPageIndexRef.current] && (
-            <span>{twoDArray[firstPageIndexRef.current][0].content}</span>
+            <>
+              <p>{twoDArray[firstPageIndexRef.current][0].page_no}</p>
+              <p>{twoDArray[firstPageIndexRef.current][0].content}</p>
+            </>
           )}
         </div>
 
         <div className={`book-page right ${darkTheme ? "" : "light"}`}>
           {twoDArray[firstPageIndexRef.current] && (
-            <span>{twoDArray[firstPageIndexRef.current][1].content}</span>
+            <>
+              <p>{twoDArray[firstPageIndexRef.current][1].page_no}</p>
+              <p>{twoDArray[firstPageIndexRef.current][1].content}</p>
+            </>
           )}
         </div>
       </div>

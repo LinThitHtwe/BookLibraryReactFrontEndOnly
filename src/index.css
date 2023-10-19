@@ -58,9 +58,17 @@
 .sidebar-dropdown.wish-item {
   height: auto;
   text-align: start;
-  width: 12vw;
+
   transition: 1s;
   transition-timing-function: ease-in-out;
+}
+
+.sidebar-dropdown.bookmark-item {
+  width: 12vw;
+}
+
+.sidebar-dropdown.bookmark-item {
+  width: 12vw;
 }
 
 .sidebar-dropdown.bookmark-item ul,
@@ -221,9 +229,12 @@
 }
 .book-page.left,
 .book-page.right {
+  display: flex;
+  flex-direction: column;
   background-color: #444;
   padding: 10px;
   width: 40vw;
+  align-items: center;
 }
 
 .book-page.left.light,

@@ -21,6 +21,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/book/:id" element={<BookRead />} />
+              <Route path="/book/:id/:currentPage" element={<BookRead />} />
             </Routes>
           </div>
         </ThemeProvider>

@@ -1,5 +1,6 @@
 import React from "react";
 import UseFetch from "../hooks/useFetch";
+import { Link } from "react-router-dom";
 
 const BookMarkDetails = ({ bookId, userId }) => {
   const bookmarkDetailsUrl = "/api/v1/bookmark/" + bookId + "/" + userId;
@@ -13,7 +14,9 @@ const BookMarkDetails = ({ bookId, userId }) => {
       {data &&
         data[0].bookmarkPages.map((d) => (
           <li key={d.id}>
-            <span>Page {d.page_no}</span>
+            <Link to={`/book/${data[0].bookId}/${d.page_no}`}>
+              <span>Page {d.page_no}</span>
+            </Link>
           </li>
         ))}
     </ul>
