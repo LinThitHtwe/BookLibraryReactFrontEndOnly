@@ -9,22 +9,21 @@ axios.defaults.baseURL = "http://localhost:8080/";
 // axios.defaults.withCredentials = true;
 
 function App() {
+  const [darkTheme, setDarkTheme] = useTheme();
   return (
     <>
       <BrowserRouter>
-        <ThemeProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+        </Routes>
+        <div className={`root ${darkTheme ? "" : "light"}`}>
+          <LeftSidebar />
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/book/:id" element={<BookRead />} />
+            <Route path="/book/:id/:currentPage" element={<BookRead />} />
           </Routes>
-          <div className="root">
-            <LeftSidebar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/book/:id" element={<BookRead />} />
-              <Route path="/book/:id/:currentPage" element={<BookRead />} />
-            </Routes>
-          </div>
-        </ThemeProvider>
+        </div>
       </BrowserRouter>
     </>
   );

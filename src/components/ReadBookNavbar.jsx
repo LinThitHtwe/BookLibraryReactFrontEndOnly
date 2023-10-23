@@ -17,6 +17,8 @@ const ReadBookNavbar = ({ id }) => {
     currentPageFromUrl ? parseInt(currentPageFromUrl) + 2 : 2
   );
 
+  const [fetchBackward, setFetchBackward] = useState(false);
+
   const firstPageIndexRef = useRef(0);
   const secondPageIndexRef = useRef(1);
   const firstPage = data?.contents[0].page_no;
@@ -24,11 +26,13 @@ const ReadBookNavbar = ({ id }) => {
 
   const isCurrentPageTwo = currentPage === 2;
   const subtractValue = isCurrentPageTwo ? -1 : -2;
-  const shouldFetchDataBackward = currentPage === firstPage + 1;
+  const increastValue = isCurrentPageTwo ? 1 : 2;
+  const shouldFetchDataBackward = currentPage === firstPage + increastValue;
+  console.log("shouldFetchDataBackward--", shouldFetchDataBackward);
   const shouldFetchData = currentPage === lastPage + subtractValue;
   let twoDArray = [];
   const fetchUrl = `api/v1/book/${id}/${currentPage}`;
-
+  let fetchDataForSkip = false;
   useEffect(() => {
     const fetchData = () => {
       axios
@@ -52,19 +56,25 @@ const ReadBookNavbar = ({ id }) => {
     fetchData();
     firstPageIndexRef.current = 0;
     secondPageIndexRef.current = 1;
-  }, [id, shouldFetchData, shouldFetchDataBackward, currentPageFromUrl]);
+  }, [
+    id,
+    shouldFetchData,
+    fetchBackward,
+    currentPageFromUrl,
+    fetchDataForSkip,
+  ]);
 
   const handleNextPageClick = () => {
-    console.log("click");
     setCurrentPage((prevPage) => prevPage + 2);
     firstPageIndexRef.current += 1;
     secondPageIndexRef.current += 2;
   };
 
   const handlePreviousPageClick = () => {
-    setCurrentPage((prevPage) => prevPage - 2);
-    firstPageIndexRef.current -= 1;
-    secondPageIndexRef.current -= 2;
+    // setCurrentPage((prevPage) => prevPage - 2);
+    // firstPageIndexRef.current -= 1;
+    // secondPageIndexRef.current -= 2;
+    setFetchBackward(!fetchBackward);
   };
   if (data) {
     const originalArray = data?.contents;
@@ -77,11 +87,22 @@ const ReadBookNavbar = ({ id }) => {
     9;
   }
 
+  const handleEndPageClick = () => {
+    setCurrentPage(data?.book.totalPage);
+    fetchDataForSkip = true;
+  };
+
   const handleHeartClick = () => {
     setIsHeartClick(!isHeartClick);
   };
   const handleBookmarkClick = () => {
     setIsBookmarkClick(!isBookmarkClick);
+  };
+
+  const handleStartPageClick = () => {
+    setCurrentPage(2);
+    firstPageIndexRef.current = 0;
+    secondPageIndexRef.current = 1;
   };
 
   return (
@@ -99,7 +120,14 @@ const ReadBookNavbar = ({ id }) => {
         <div className="page-function-container">
           <div className="page-search">
             <span class="material-symbols-outlined hover">search</span>
-            <input type="number" placeholder="1" />
+            <input
+              type="number"
+              placeholder="1"
+              value={
+                data?.contents[secondPageIndexRef.current] &&
+                data?.contents[secondPageIndexRef.current].page_no
+              }
+            />
           </div>
           <button onClick={handlePreviousPageClick}>
             <i className="fa-solid fa-chevron-left"></i>
@@ -113,10 +141,10 @@ const ReadBookNavbar = ({ id }) => {
             } fa-bookmark hover`}
             onClick={handleBookmarkClick}
           ></i>
-          <button>
+          <button onClick={handleStartPageClick}>
             <i className="fa-solid fa-angles-left"></i>
           </button>
-          <button>
+          <button onClick={handleEndPageClick}>
             <i className="fa-solid fa-angles-right"></i>
           </button>
           <i className="fa-solid fa-expand hover"></i>
@@ -131,8 +159,8 @@ const ReadBookNavbar = ({ id }) => {
         <div className={`book-page left ${darkTheme ? "" : "light"}`}>
           {twoDArray[firstPageIndexRef.current] && (
             <>
-              <p>{twoDArray[firstPageIndexRef.current][0].page_no}</p>
-              <p>{twoDArray[firstPageIndexRef.current][0].content}</p>
+              <p>{twoDArray[firstPageIndexRef.current][0]?.page_no}</p>
+              <p>{twoDArray[firstPageIndexRef.current][0]?.content}</p>
             </>
           )}
         </div>
@@ -140,8 +168,8 @@ const ReadBookNavbar = ({ id }) => {
         <div className={`book-page right ${darkTheme ? "" : "light"}`}>
           {twoDArray[firstPageIndexRef.current] && (
             <>
-              <p>{twoDArray[firstPageIndexRef.current][1].page_no}</p>
-              <p>{twoDArray[firstPageIndexRef.current][1].content}</p>
+              <p>{twoDArray[firstPageIndexRef.current][1]?.page_no}</p>
+              <p>{twoDArray[firstPageIndexRef.current][1]?.content}</p>
             </>
           )}
         </div>

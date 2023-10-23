@@ -20,9 +20,7 @@ const RightSidebar = () => {
             data.map((d) => (
               <div className="progress" key={d?.book.id}>
                 <span>{d?.book.title} </span>
-                <progress value={d?.percent} max="100">
-                  32%
-                </progress>
+                <progress value={d?.percent} max="100"></progress>
               </div>
             ))}
         </div>

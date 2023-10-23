@@ -10,8 +10,12 @@
   display: flex;
   justify-content: space-evenly;
   background-color: #222;
-  padding: 25px;
+  padding: 15px;
   gap: 30px;
+}
+
+.root.light {
+  background-color: #fff;
 }
 
 .left-sidebar,
@@ -373,6 +377,11 @@
   margin-top: 10px;
 }
 
+.progress-bar-container Link {
+  text-decoration: none;
+  color: #fff;
+}
+
 progress {
   width: 10vw;
 }
@@ -383,6 +392,10 @@ progress::-webkit-progress-bar {
 progress::-webkit-progress-value {
   background-color: #33ff33;
   border-radius: 20px;
+}
+
+.progress:hover {
+  scale: 1.02;
 }
 
 .login-root {
