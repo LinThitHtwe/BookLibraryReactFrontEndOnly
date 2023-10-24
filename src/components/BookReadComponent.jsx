@@ -1,9 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "../context/ThemeProvider";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const BookReadComponents = ({ id }) => {
-  const [currentPage, setCurrentPage] = useState(2);
+  const { currentPage: currentPageFromUrl } = useParams();
+  const [currentPage, setCurrentPage] = useState(
+    currentPageFromUrl
+      ? Number(currentPageFromUrl) % 2 !== 0
+        ? Number(currentPageFromUrl) + 1
+        : Number(currentPageFromUrl)
+      : 2
+  );
+
   const [searchPage, setSearchPage] = useState(0);
   const [isHeartClick, setIsHeartClick] = useState(false);
   const [isBookmarkClick, setIsBookmarkClick] = useState(false);
@@ -14,9 +23,23 @@ const BookReadComponents = ({ id }) => {
   const firstFetchPage = useRef(0);
   const lastFetchPage = useRef(0);
 
-  const shouldFetchData = lastFetchPage.current == currentPage + 2;
+  const shouldFetchData =
+    lastFetchPage.current == currentPage + 2 ||
+    lastFetchPage.current < currentPage;
   const shouldFetchDataBackward = firstFetchPage.current == currentPage - 3;
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (Number(searchPage) % 2 != 0) {
+      setCurrentPage(Number(searchPage) + 1);
+    } else {
+      setCurrentPage(Number(searchPage));
+    }
+    setSearchPage("");
+  };
+
   useEffect(() => {
+    console.log("fetch");
     const fetchData = () => {
       axios
         .get(`api/v1/book/${id}/${currentPage}`)
@@ -27,12 +50,13 @@ const BookReadComponents = ({ id }) => {
           return res.data;
         })
         .then((data) => {
+          console.log("data---", data);
           setData(data);
           setIsPending(false);
           setError(null);
           lastFetchPage.current =
-            data.contents[data.contents.length - 1].page_no;
-          firstFetchPage.current = data.contents[0].page_no;
+            data.contents[data.contents.length - 1]?.page_no;
+          firstFetchPage.current = data.contents[0]?.page_no;
         })
         .catch((err) => {
           setError(err.message);
@@ -40,7 +64,7 @@ const BookReadComponents = ({ id }) => {
         });
     };
     fetchData();
-  }, [shouldFetchData, shouldFetchDataBackward]);
+  }, [shouldFetchData, shouldFetchDataBackward, currentPageFromUrl]);
 
   const handleHeartClick = () => {
     setIsHeartClick(!isHeartClick);
@@ -71,8 +95,18 @@ const BookReadComponents = ({ id }) => {
         </div>
         <div className="page-function-container">
           <div className="page-search">
-            <span className="material-symbols-outlined hover">search</span>
-            <input type="number" placeholder="search" />
+            <span
+              className="material-symbols-outlined hover"
+              onClick={handleSearch}
+            >
+              search
+            </span>
+            <input
+              type="number"
+              placeholder="search"
+              value={searchPage}
+              onChange={(e) => setSearchPage(e.target.value)}
+            />
           </div>
           <button
             onClick={handlePreviousPageClick}
@@ -107,25 +141,23 @@ const BookReadComponents = ({ id }) => {
         <div className={`book-page left ${darkTheme ? "" : "light"}`}>
           <p>
             {data &&
-              data.contents.find((c) => c.page_no === currentPage - 1).page_no}
+              data.contents.find((c) => c.page_no === currentPage - 1)?.page_no}
           </p>
           <p>
-            <p>
-              {data &&
-                data.contents.find((c) => c.page_no === currentPage - 1)
-                  .content}
-            </p>
+            {data &&
+              data.contents.find((c) => c.page_no === currentPage - 1)?.content}
           </p>
         </div>
 
         <div className={`book-page right ${darkTheme ? "" : "light"}`}>
           <p>
             {data &&
-              data.contents.find((c) => c.page_no === currentPage).page_no}
+              data.contents.find((c) => c.page_no === currentPage)?.page_no}
           </p>
           <p>
             {data &&
-              data.contents.find((c) => c.page_no === currentPage).content}{" "}
+              data.contents.find((c) => c.page_no === currentPage)
+                ?.content}{" "}
           </p>
         </div>
       </div>
