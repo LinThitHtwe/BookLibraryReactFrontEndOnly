@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { useTheme } from "../context/ThemeProvider";
 import UseFetch from "../hooks/useFetch";
+import BookDetailModal from "./BookDetailModal";
 
 const BookCard = ({ fetchUrl, searchQuery }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [heartClick, setHeartClick] = useState([]);
+  const bookDBRef = useRef(null);
   const { data: bookData, isPending, error } = UseFetch(fetchUrl);
   const [darkTheme, setDarkTheme] = useTheme();
   const itemsPerPage = 3;
@@ -25,16 +27,18 @@ const BookCard = ({ fetchUrl, searchQuery }) => {
     return titleMatch || authorMatch;
   });
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (e, bd) => {
+    e.preventDefault();
+    bookDBRef.current = bd;
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (e) => {
+    e.preventDefault();
     setIsModalOpen(false);
   };
 
   const handleHeartClick = (e, bd) => {
-    console.log("click");
     e.preventDefault();
     const index = heartClick.indexOf(bd.book.id);
     if (index == -1) {
@@ -52,6 +56,12 @@ const BookCard = ({ fetchUrl, searchQuery }) => {
     <>
       <div className="book-card-container">
         {error && <div>Fail to fetch Book data</div>}
+        {isModalOpen && (
+          <BookDetailModal
+            book={bookDBRef.current}
+            handleCloseModal={handleCloseModal}
+          />
+        )}
         {paginatedData &&
           paginatedData.map((bd) => (
             <Link
@@ -77,7 +87,7 @@ const BookCard = ({ fetchUrl, searchQuery }) => {
                   ></i>
                   <i
                     className="fa-solid fa-ellipsis"
-                    onClick={handleOpenModal}
+                    onClick={(e) => handleOpenModal(e, bd)}
                   ></i>
                 </div>
               </div>

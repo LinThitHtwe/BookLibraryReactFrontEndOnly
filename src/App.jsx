@@ -20,6 +20,7 @@ function App() {
           <LeftSidebar />
           <Routes>
             <Route path="/" element={<Home />} />
+            {/* <Route path='/test/:id' element */}
             <Route path="/book/:id" element={<BookRead />} />
             <Route path="/book/:id/:currentPage" element={<BookRead />} />
           </Routes>
