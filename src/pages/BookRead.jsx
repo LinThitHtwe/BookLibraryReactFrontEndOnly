@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import ReadBookNavbar from "../components/ReadBookNavbar";
 import React, { useReducer } from "react";
 import { useTheme } from "../context/ThemeProvider";
+import BookReadComponents from "../components/BookReadComponent";
 
 // export const BOOKREADACTIONS = {
 //   READ_CONTENT: "read_content",
@@ -23,7 +24,7 @@ const BookRead = () => {
 
   return (
     <div className={`book-reading-page ${darkTheme ? "" : "light"}`}>
-      <ReadBookNavbar id={id} />
+      <BookReadComponents id={id} />
       {/* <BookPage id={id} dispatch={dispatch} /> */}
     </div>
   );
