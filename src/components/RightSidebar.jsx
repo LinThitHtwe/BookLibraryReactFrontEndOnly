@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "../context/ThemeProvider";
 import UseFetch from "../hooks/useFetch";
+import { Link } from "react-router-dom";
 
 const RightSidebar = () => {
   const [darkTheme, setDarkTheme] = useTheme();
@@ -18,10 +19,14 @@ const RightSidebar = () => {
         <div className={`progress-bar-container ${darkTheme ? "" : "light"}`}>
           {data &&
             data.map((d) => (
-              <div className="progress" key={d?.book.id}>
-                <span>{d?.book.title} </span>
-                <progress value={d?.percent} max="100"></progress>
-              </div>
+              <>
+                <Link to={`book/${d.book.id}/${d.resumePage}`}>
+                  <div className="progress" key={d?.book.id}>
+                    <span>{d?.book.title} </span>
+                    <progress value={d?.percent} max="100"></progress>
+                  </div>
+                </Link>
+              </>
             ))}
         </div>
       </div>
